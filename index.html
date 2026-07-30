@@ -197,7 +197,7 @@
   .plate h3{font-family:var(--serif);font-weight:700;font-size:1.45rem;letter-spacing:-.01em}
   .plate p{color:#4A453A;font-size:.98rem;max-width:62em;margin-bottom:14px}
   .fig{border:1px solid var(--rule-dark);background:#fff;margin:14px 0}
-  .fig img{width:100%;display:block}
+  .fig img{width:100%;height:auto;display:block}
   .fig-cap{
     font-family:var(--serif);font-style:italic;font-size:.86rem;color:var(--sub);
     padding:9px 14px;border-top:1px solid var(--rule);background:var(--paper);
@@ -577,7 +577,7 @@
   <p>© 2026 Akshat Kandwal · Waterloo, Ontario · <span id="noseEgg" title="are you sure about that?" tabindex="0" role="button">no noses were harmed</span> in the making of this volume.</p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+<script src="assets/js/anime.min.js"></script>
 <script>
 (function(){
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -616,6 +616,10 @@
     // so the image is never left invisible if the library fails to load.
     treeImg.style.clipPath = 'inset(0 100% 0 0)';
     treeImg.style.opacity = 0;
+    // Observe the (unclipped) .fig wrapper rather than treeImg itself: some
+    // browsers compute intersection against an element's post-clip-path
+    // visual area, and treeImg starts fully clipped to zero width, which
+    // would leave isIntersecting permanently false and the reveal dead.
     const obs = new IntersectionObserver(entries => {
       entries.forEach(en => {
         if (!en.isIntersecting) return;
@@ -629,7 +633,7 @@
         });
       });
     }, { threshold: 0.35 });
-    obs.observe(treeImg);
+    obs.observe(treeImg.closest('.fig'));
   })();
 
   /* ---- mobile nav toggle ---- */
