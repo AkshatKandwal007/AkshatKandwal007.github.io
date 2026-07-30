@@ -836,7 +836,21 @@
       const opts = {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: css.getPropertyValue('--ink').trim(),
+            titleFont: { family: serif },
+            bodyFont: { family: serif },
+            padding: 8,
+            cornerRadius: 0,
+            displayColors: false,
+            callbacks: {
+              title: (items) => 'Epoch ' + items[0].label,
+              label: (item) => 'Loss: ' + item.formattedValue
+            }
+          }
+        },
         scales: {
           x: {
             title: { display: true, text: 'Epoch', font: { family: serif, size: 12 }, color: sub },
