@@ -234,10 +234,9 @@
   .index-col ul{list-style:none}
   .index-col li{
     font-family:var(--serif);font-size:1rem;padding:6px 0;border-bottom:1px dotted var(--rule);
-    display:flex;justify-content:space-between;color:#3E3A30;transition:color .12s;
+    color:#3E3A30;transition:color .12s;
   }
   .index-col li:hover{color:var(--crimson)}
-  .index-col li span{font-family:var(--mono);font-size:10px;color:var(--gold);align-self:center}
 
   /* contact */
   #contact{border-bottom:none;padding-bottom:80px}
@@ -335,7 +334,7 @@
         <div class="cross-line" id="crossV"></div>
         <div class="cross-line" id="crossH"></div>
         <div id="crossLabel">x:000 y:000</div>
-        <div class="scan-cap"><span><b>Plate I.</b> Landmark tracking, after Kandwal et al.</span><span class="scan-hint" id="lmStatus" aria-live="polite">🎯 CLICK THE DOTS · 0/6</span></div>
+        <div class="scan-cap"><span><b>Plate I.</b> Landmark tracking, after Kandwal et al.</span><span class="scan-hint" id="lmStatus" aria-live="polite">CLICK THE DOTS · 0/6</span></div>
       </div>
     </div>
   </div>
@@ -368,11 +367,11 @@
       <aside class="side-card">
         <h3>At a glance</h3>
         <ul>
-          <li>📍 Waterloo, ON, Canada</li>
-          <li>🎓 BCS Honours Co-op, UWaterloo</li>
-          <li>🔬 Published ML researcher</li>
-          <li>🏥 Currently: healthcare AI co-op</li>
-          <li>⌨️ Daily DSA in C, pattern-first</li>
+          <li>Waterloo, ON, Canada</li>
+          <li>BCS Honours Co-op, UWaterloo</li>
+          <li>Published ML researcher</li>
+          <li>Currently: healthcare AI co-op</li>
+          <li>Daily DSA in C, pattern-first</li>
         </ul>
       </aside>
     </div>
@@ -556,32 +555,32 @@
       <div class="index-col">
         <h3>Languages</h3>
         <ul>
-          <li>Python <span>★★★</span></li>
-          <li>C / C++ <span>★★★</span></li>
-          <li>JavaScript <span>★★</span></li>
-          <li>Java <span>★★</span></li>
-          <li>SQL <span>★★</span></li>
-          <li>MATLAB <span>★★</span></li>
+          <li>Python</li>
+          <li>C / C++</li>
+          <li>JavaScript</li>
+          <li>Java</li>
+          <li>SQL</li>
+          <li>MATLAB</li>
         </ul>
       </div>
       <div class="index-col">
         <h3>Frameworks &amp; libraries</h3>
         <ul>
-          <li>PyTorch <span>★★★</span></li>
-          <li>OpenCV <span>★★★</span></li>
-          <li>scikit-learn <span>★★</span></li>
-          <li>pandas / NumPy <span>★★</span></li>
-          <li>React / Node.js <span>★★</span></li>
+          <li>PyTorch</li>
+          <li>OpenCV</li>
+          <li>scikit-learn</li>
+          <li>pandas / NumPy</li>
+          <li>React / Node.js</li>
         </ul>
       </div>
       <div class="index-col">
         <h3>Tools &amp; domains</h3>
         <ul>
-          <li>Machine learning <span>★★★</span></li>
-          <li>Computer vision <span>★★★</span></li>
-          <li>Git / Linux / Docker <span>★★</span></li>
-          <li>Requirements analysis <span>★★</span></li>
-          <li>Deep learning <span>★★</span></li>
+          <li>Machine learning</li>
+          <li>Computer vision</li>
+          <li>Git / Linux / Docker</li>
+          <li>Requirements analysis</li>
+          <li>Deep learning</li>
         </ul>
       </div>
     </div>
@@ -771,10 +770,10 @@
     h.classList.add('found');
     found++;
     if (found < hits.length) {
-      status.textContent = '🎯 CLICK THE DOTS · ' + found + '/' + hits.length;
+      status.textContent = 'CLICK THE DOTS · ' + found + '/' + hits.length;
     } else {
       done = true;
-      status.textContent = '✅ ALL LANDMARKS FOUND · 92% ACC · YOU\'RE HIRED';
+      status.textContent = 'ALL LANDMARKS FOUND · 92% ACC · YOU\'RE HIRED';
       confetti();
     }
   }
