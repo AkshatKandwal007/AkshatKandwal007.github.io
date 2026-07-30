@@ -630,36 +630,52 @@
       .add({ targets: '.keywords',    opacity: [0,1] }, '-=560');
   })();
 
-  /* ---- anime.js: "grow the decision tree" reveal (Plate II, Fig. 1) ----
-     Wipes the tree image in from its root (left) to its leaves (right) when
-     it scrolls into view. Animates clip-path only, so it never fights the
-     parent .plate scroll-reveal (which animates opacity/transform). ------- */
-  (function growTree(){
+  /* ---- anime.js: figure reveals (every project figure) ----
+     Line-plot figures (the tree, the loss/accuracy curve) wipe in left to
+     right so the plot reads as though it's being traced live, since their
+     x-axis already runs in that direction. Non-line figures (the
+     correlation matrix, the spectrograms) get a simple fade + rise
+     instead. Both animate clip-path/opacity/transform only, so neither
+     fights the parent .plate scroll-reveal (which animates the .plate
+     card itself, not the image). ---------------------------------------- */
+  (function figReveals(){
     if (reduced || !window.anime || !('IntersectionObserver' in window)) return;
-    const treeImg = document.querySelector('#projects .plate img[alt*="decision tree"]');
-    if (!treeImg) return;
-    // Hide only now that anime + observer are present and motion is allowed,
-    // so the image is never left invisible if the library fails to load.
-    treeImg.style.clipPath = 'inset(0 100% 0 0)';
-    treeImg.style.opacity = 0;
-    // Observe the (unclipped) .fig wrapper rather than treeImg itself: some
-    // browsers compute intersection against an element's post-clip-path
-    // visual area, and treeImg starts fully clipped to zero width, which
-    // would leave isIntersecting permanently false and the reveal dead.
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(en => {
-        if (!en.isIntersecting) return;
-        obs.unobserve(en.target);
-        anime({ targets: treeImg, opacity: [0,1], duration: 260, easing: 'easeOutQuad' });
-        const wipe = { r: 100 };
-        anime({
-          targets: wipe, r: 0, duration: 1400, easing: 'easeInOutQuad',
-          update: () => { treeImg.style.clipPath = 'inset(0 ' + wipe.r + '% 0 0)'; },
-          complete: () => { treeImg.style.clipPath = 'none'; }
+    const isTraced = img => img.alt.includes('decision tree') || img.alt.includes('Training loss decreasing');
+
+    document.querySelectorAll('#projects .fig img').forEach(img => {
+      // Hide only now that anime + observer are present and motion is allowed,
+      // so the image is never left invisible if the library fails to load.
+      const traced = isTraced(img);
+      if (traced) {
+        img.style.clipPath = 'inset(0 100% 0 0)';
+      } else {
+        img.style.transform = 'translateY(14px)';
+      }
+      img.style.opacity = 0;
+
+      // Observe the (unclipped) .fig wrapper rather than the image itself:
+      // some browsers compute intersection against an element's post-clip-path
+      // visual area, and a traced image starts fully clipped to zero width,
+      // which would leave isIntersecting permanently false and the reveal dead.
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          obs.unobserve(en.target);
+          if (traced) {
+            anime({ targets: img, opacity: [0,1], duration: 260, easing: 'easeOutQuad' });
+            const wipe = { r: 100 };
+            anime({
+              targets: wipe, r: 0, duration: 1400, easing: 'easeInOutQuad',
+              update: () => { img.style.clipPath = 'inset(0 ' + wipe.r + '% 0 0)'; },
+              complete: () => { img.style.clipPath = 'none'; }
+            });
+          } else {
+            anime({ targets: img, opacity: [0,1], translateY: [14,0], duration: 700, easing: 'easeOutQuad' });
+          }
         });
-      });
-    }, { threshold: 0.35 });
-    obs.observe(treeImg.closest('.fig'));
+      }, { threshold: 0.35 });
+      obs.observe(img.closest('.fig'));
+    });
   })();
 
   /* ---- mobile nav toggle ---- */
