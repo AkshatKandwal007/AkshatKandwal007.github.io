@@ -256,15 +256,6 @@
     .reveal{opacity:1;transform:none;transition:none}
     .cross-line,#crossLabel{display:none}
   }
-
-  /* custom cursor ring */
-  #cursorRing{
-    position:fixed;top:0;left:0;width:24px;height:24px;margin-left:-12px;margin-top:-12px;
-    border:1.5px solid var(--crimson);border-radius:50%;pointer-events:none;z-index:9999;opacity:0;
-    transition:transform .18s ease, background-color .18s ease, opacity .2s ease;
-  }
-  #cursorRing.cursor-active{transform:scale(1.4);background:rgba(142,43,31,.08)}
-  @media(hover:none),(pointer:coarse){#cursorRing{display:none}}
   #confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:999}
   .nose-drop{position:fixed;top:-40px;font-size:26px;pointer-events:none;z-index:998;animation:drop 2.6s ease-in forwards}
   @keyframes drop{to{transform:translateY(110vh) rotate(360deg)}}
@@ -623,45 +614,6 @@
 (function(){
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const PALETTE = ['#8E2B1F','#B08A2E','#1C1914','#6B6558'];
-
-  /* ---- anime.js: custom cursor ring ----
-     A small ring trails the real cursor with a springy lag (each mousemove
-     re-targets the same anime() tween, which continues from its current
-     interpolated position). Grows slightly over links/buttons. Mouse-only
-     (hidden on touch/coarse pointers) and skipped under reduced-motion; the
-     native cursor is never hidden, so nothing breaks if this fails to run. */
-  (function customCursor(){
-    if (reduced || !window.anime) return;
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-    const ring = document.createElement('div');
-    ring.id = 'cursorRing';
-    ring.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(ring);
-
-    let shown = false;
-    document.addEventListener('mousemove', (e) => {
-      if (!shown) {
-        ring.style.left = e.clientX + 'px';
-        ring.style.top = e.clientY + 'px';
-        anime({ targets: ring, opacity: [0,1], duration: 200, easing: 'easeOutQuad' });
-        shown = true;
-      } else {
-        anime({ targets: ring, left: e.clientX, top: e.clientY, duration: 450, easing: 'easeOutQuad' });
-      }
-    });
-    document.addEventListener('mouseleave', () => {
-      anime({ targets: ring, opacity: [1,0], duration: 200, easing: 'easeOutQuad' });
-      shown = false;
-    });
-
-    const hoverSel = 'a, button, [role="button"], input, textarea, .btn, .tag, [tabindex="0"]';
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest && e.target.closest(hoverSel)) ring.classList.add('cursor-active');
-    });
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.closest && e.target.closest(hoverSel)) ring.classList.remove('cursor-active');
-    });
-  })();
 
   /* ---- anime.js hero entrance (net-new; nothing else animates these) ---- */
   (function heroIntro(){
