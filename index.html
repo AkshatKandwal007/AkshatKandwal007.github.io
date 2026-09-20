@@ -338,7 +338,7 @@
           </g>
           <text x="158" y="69" font-family="Spline Sans Mono" font-size="10" fill="#6B6558">P1 · nasion</text>
           <text x="128" y="182" font-family="Spline Sans Mono" font-size="10" fill="#6B6558">P4 · tip</text>
-          <text x="160" y="260" font-family="Spline Sans Mono" font-size="10" fill="#6B6558">P8 · 92% acc</text>
+          <text x="160" y="260" font-family="Spline Sans Mono" font-size="10" fill="#6B6558">9 pts → 36 dist.</text>
         </svg>
         <div class="cross-line" id="crossV"></div>
         <div class="cross-line" id="crossH"></div>
@@ -358,8 +358,9 @@
       <div class="prose">
         <p>
           In high school, I co-authored peer-reviewed research with IIT Roorkee: a machine learning model
-          that tracks anatomical landmarks in rhinoplasty images. It hit <strong>92% accuracy</strong>,
-          picked up <strong>5+ citations on Google Scholar</strong>, and permanently set my direction:
+          that uses AI facial-landmark detection to put an objective number on nasal deformity from a
+          single photo. Tested on <strong>250 patient images</strong>, it picked up
+          <strong>5+ citations on Google Scholar</strong> and permanently set my direction:
           <strong>build AI that actually helps in medicine</strong>.
         </p>
         <p>
@@ -386,7 +387,7 @@
     </div>
 
     <div class="stat-row">
-      <div class="stat"><div class="num" data-count="92" data-suffix="%">0%</div><div class="lbl">Landmark accuracy</div></div>
+      <div class="stat"><div class="num" data-count="250" data-suffix="">0</div><div class="lbl">Patient images analysed</div></div>
       <div class="stat"><div class="num" data-count="5" data-suffix="+">0+</div><div class="lbl">Scholar citations</div></div>
       <div class="stat"><div class="num" data-count="150" data-suffix="K+">0K+</div><div class="lbl">CNN params trained</div></div>
     </div>
@@ -456,29 +457,27 @@
       <div class="plate-head"><span class="plate-no">Plate II · The origin story</span></div>
       <h3>AI-Powered Rhinoplasty Assessment System</h3>
       <p>
-        An end-to-end pipeline that detects 9 nose-specific anatomical landmarks across 250 medical
-        images at 92% accuracy, cutting clinician assessment time. Facial landmarks (dlib) become 36
-        perceptual distance features, feeding a 100-tree random forest. Co-authored with IIT Roorkee,
-        peer-reviewed, published, and cited 5+ times on Google Scholar, all before my first university lecture.
+        A computer-vision method that quantifies nasal deformity from a single 2D photo. A landmark model
+        pre-trained on iBUG-300W locates the 9 nose points; the 36 distances between them are min-max
+        normalised and scored as z-scores against ~250 post-rhinoplasty images (male patients, 18 to 24) to give
+        a defect score Q from 0 to 100%. It averaged 76.2% across the dataset, giving surgeons an objective
+        measure for preoperative planning. Co-authored with IIT Roorkee, peer-reviewed, published, and cited
+        5+ times on Google Scholar, all before my first university lecture.
       </p>
-      <div class="fig">
-        <img src="assets/img/rhinoplasty-tree.webp" alt="One decision tree from the random forest model, showing hundreds of branching nodes" width="1400" height="177" loading="lazy">
-        <div class="fig-cap"><b>Fig. 1.</b> One of 100 trees in the random forest, grown on landmark-distance features.</div>
-      </div>
       <div class="fig" style="max-width:620px">
-        <img src="assets/img/rhinoplasty-correlation.webp" alt="Correlation heatmap of the 36 perceptual distance features" width="1626" height="1715" loading="lazy">
-        <div class="fig-cap"><b>Fig. 2.</b> Correlation matrix across the 36 distance features.</div>
+        <img src="assets/img/rhinoplasty-correlation.webp" alt="Correlation heatmap of the 36 nose-landmark distance features" width="1626" height="1715" loading="lazy">
+        <div class="fig-cap"><b>Fig. 1.</b> Correlation matrix across the 36 distance features.</div>
       </div>
       <div class="dash dash-ring">
-        <div class="dash-label">Landmark accuracy</div>
+        <div class="dash-label">Mean defect quantification (Q)</div>
         <div class="dash-card">
           <div class="dash-chart">
-            <canvas id="landmarkAccuracyChart" role="img" aria-label="Doughnut chart showing 92% landmark detection accuracy, with the remaining 8% shown as an unfilled ring"></canvas>
-            <div class="dash-chart-center" aria-hidden="true">92%</div>
+            <canvas id="landmarkAccuracyChart" role="img" aria-label="Doughnut chart showing a mean defect quantification Q of 76.2% across 250 images, with the remainder shown as an unfilled ring"></canvas>
+            <div class="dash-chart-center" aria-hidden="true">76.2%</div>
           </div>
         </div>
       </div>
-      <div class="tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">dlib</span><span class="tag">scikit-learn</span><span class="tag">random forest</span><span class="tag">medical imaging</span></div>
+      <div class="tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">facial landmarks</span><span class="tag">iBUG-300W</span><span class="tag">statistics</span><span class="tag">medical imaging</span></div>
     </div>
 
     <div class="plate">
@@ -497,11 +496,11 @@
             </svg>
           <img src="assets/img/genre-classifier-loss.webp" alt="Training loss decreasing smoothly over 50 epochs, and test accuracy over the same run" width="1783" height="582" loading="lazy">
           </div>
-          <div class="fig-cap"><b>Fig. 3.</b> Training loss &amp; test accuracy, 50 epochs.</div>
+          <div class="fig-cap"><b>Fig. 2.</b> Training loss &amp; test accuracy, 50 epochs.</div>
         </div>
         <div class="fig">
           <img src="assets/img/genre-classifier-spectrograms.webp" alt="Mel-spectrograms of the three genre classes: Rock, Classical, and Jazz" width="1772" height="432" loading="lazy">
-          <div class="fig-cap"><b>Fig. 4.</b> What the model actually "sees".</div>
+          <div class="fig-cap"><b>Fig. 3.</b> What the model actually "sees".</div>
         </div>
       </div>
       <div class="dash">
@@ -657,7 +656,6 @@
   (function figReveals(){
     if (reduced || !window.anime || !('IntersectionObserver' in window)) return;
     const kindOf = img => {
-      if (img.alt.includes('decision tree')) return 'wipe';
       if (img.alt.includes('Training loss decreasing')) return 'axis-wipe';
       return 'fade';
     };
@@ -783,7 +781,7 @@
       status.textContent = 'CLICK THE DOTS · ' + found + '/' + hits.length;
     } else {
       done = true;
-      status.textContent = 'ALL LANDMARKS FOUND · 92% ACC · YOU\'RE HIRED';
+      status.textContent = 'ALL 9 FOUND · 36 DISTANCES · YOU\'RE HIRED';
       confetti();
     }
   }
@@ -883,8 +881,8 @@
       new Chart(landmarkEl, {
         type: 'doughnut',
         data: {
-          labels: ['Detected', 'Remaining'],
-          datasets: [{ data: [92, 8], backgroundColor: [crimson, rule], borderWidth: 0 }]
+          labels: ['Mean Q', 'Remaining'],
+          datasets: [{ data: [76.2, 23.8], backgroundColor: [crimson, rule], borderWidth: 0 }]
         },
         options: opts
       });
