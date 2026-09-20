@@ -199,20 +199,11 @@
   .plate p{color:#4A453A;font-size:.98rem;max-width:62em;margin-bottom:14px}
   .fig{border:1px solid var(--rule-dark);background:#fff;margin:14px 0}
   .fig img{width:100%;height:auto;display:block}
-  .fig-media{position:relative}
-  .fig-axis{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
   .fig-cap{
     font-family:var(--serif);font-style:italic;font-size:.86rem;color:var(--sub);
     padding:9px 14px;border-top:1px solid var(--rule);background:var(--paper);
   }
   .fig-cap b{font-style:normal;font-weight:500;color:var(--ink)}
-  .fig-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}
-  @media(max-width:760px){.fig-grid{grid-template-columns:1fr}}
-  .fig-grid .fig{margin:0}
-  .dash{margin:14px 0;max-width:420px}
-  .dash-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px}
-  .dash-card{background:var(--paper);border:1px solid var(--ink);padding:1rem 1.25rem}
-  .dash-chart{position:relative;height:200px}
   .qgrid{display:grid;grid-template-columns:1fr 1.15fr 1fr}
   .qpanel{padding:18px 20px 16px;border-left:1px solid var(--rule);display:flex;flex-direction:column}
   .qpanel:first-child{border-left:none}
@@ -278,6 +269,22 @@
   @media(max-width:680px){
     .lrow{grid-template-columns:1fr}
     .ladder{padding:14px 14px 4px}
+  }
+  .curves{display:grid;grid-template-columns:1fr 1fr}
+  .curve{padding:16px 18px 6px;border-left:1px solid var(--rule)}
+  .curve:first-child{border-left:none}
+  .cv{width:100%;height:auto;display:block}
+  .specs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:16px 18px 6px;max-width:640px;margin:0 auto}
+  .spec{margin:0}
+  .spec img{border:1px solid var(--rule-dark)}
+  .spec img.zoom{margin-top:6px}
+  .spec figcaption{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-top:7px}
+  .spec small{display:block;color:var(--sub);letter-spacing:.04em;text-transform:none;font-size:10px}
+  @media(max-width:680px){
+    .curves{grid-template-columns:1fr}
+    .curve{border-left:none;border-top:1px solid var(--rule)}
+    .curve:first-child{border-top:none}
+    .specs{gap:8px;padding:14px 12px 4px}
   }
   .tags{display:flex;flex-wrap:wrap;gap:0 14px;margin-top:6px}
   .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--sub)}
@@ -425,8 +432,9 @@
     <div class="about-grid">
       <div class="prose">
         <p>
-          In high school, I co-authored peer-reviewed research with IIT Roorkee: a machine learning model
-          that uses AI facial-landmark detection to put an objective number on nasal deformity from a
+          In high school, I co-authored peer-reviewed research with IIT Roorkee and AIIMS Rishikesh,
+          published in the <em>Journal of Plastic, Reconstructive &amp; Aesthetic Surgery</em>: a mathematical
+          method that uses AI facial-landmark detection to put an objective number on nasal deformity from a
           single photo. Tested on <strong>250 patient images</strong>, it picked up
           <strong>5+ citations on Google Scholar</strong> and permanently set my direction:
           <strong>build AI that actually helps in medicine</strong>.
@@ -457,7 +465,7 @@
     <div class="stat-row">
       <div class="stat"><div class="num" data-count="250" data-suffix="">0</div><div class="lbl">Patient images analysed</div></div>
       <div class="stat"><div class="num" data-count="5" data-suffix="+">0+</div><div class="lbl">Scholar citations</div></div>
-      <div class="stat"><div class="num" data-count="150" data-suffix="K+">0K+</div><div class="lbl">CNN params trained</div></div>
+      <div class="stat"><div class="num" data-count="101.6" data-decimals="1" data-suffix="K">0K</div><div class="lbl">CNN parameters</div></div>
     </div>
   </div>
 </section>
@@ -529,8 +537,9 @@
         pre-trained on iBUG-300W locates the 9 nose points; the 36 distances between them are min-max
         normalised and scored as z-scores against ~250 post-rhinoplasty images (male patients, 18 to 24) to give
         a defect score Q from 0 to 100%. It averaged 76.2% across the dataset, giving surgeons an objective
-        measure for preoperative planning. Co-authored with IIT Roorkee, peer-reviewed, published, and cited
-        5+ times on Google Scholar, all before my first university lecture.
+        measure for preoperative planning. Co-authored with researchers at IIT Roorkee and AIIMS Rishikesh,
+        published in <i>JPRAS</i> (<i>Journal of Plastic, Reconstructive &amp; Aesthetic Surgery</i>, 2024), and
+        cited 5+ times on Google Scholar, all before my first university lecture.
       </p>
       <div class="fig qfig">
         <div class="qgrid">
@@ -629,6 +638,7 @@
         <div class="fig-cap"><b>Fig. 1.</b> From nine nose landmarks to a single defect score. Worked example from the paper: mean k<sup>+</sup> = 1.092, mean k<sup>&minus;</sup> = &minus;1.245.</div>
       </div>
       <div class="tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">facial landmarks</span><span class="tag">iBUG-300W</span><span class="tag">statistics</span><span class="tag">medical imaging</span></div>
+      <div class="card-links"><a class="mini-btn" href="https://doi.org/10.1016/j.bjps.2024.02.074" target="_blank" rel="noopener">Read the paper ↗</a></div>
     </div>
 
     <div class="plate">
@@ -690,32 +700,95 @@
       <div class="plate-head"><span class="plate-no">Plate IV · From the lab notebook</span></div>
       <h3>AI Music Genre Classifier</h3>
       <p>
-        A 4-layer CNN (~150K parameters) that classifies Rock, Classical, and Jazz from mel-spectrograms:
-        it never hears the music, it just reads it like an image. Batch norm + dropout, trains in ~2 minutes
-        on CPU. Currently trained on generated audio; real-dataset training (GTZAN) is next on the roadmap.
+        A small CNN (three conv blocks, 101,571 parameters) that classifies Rock, Classical, and Jazz from
+        spectrograms: it never hears the music, it just reads it like an image. Batch norm + dropout, and the
+        whole run, data generation included, takes about 40 seconds on a laptop CPU. It&rsquo;s trained on
+        synthetic tones, so 100% on its 18 held-out samples proves the pipeline, not the music; real-dataset
+        training (GTZAN) is next on the roadmap.
       </p>
-      <div class="fig-grid">
-        <div class="fig">
-          <div class="fig-media">
-            <svg class="fig-axis" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M0,0 L0,100 L100,100" fill="none" stroke="var(--ink)" stroke-width="1.5" vector-effect="non-scaling-stroke" />
-            </svg>
-          <img src="assets/img/genre-classifier-loss.webp" alt="Training loss decreasing smoothly over 50 epochs, and test accuracy over the same run" width="1783" height="582" loading="lazy">
+      <div class="fig">
+        <div class="curves">
+          <div class="curve"><div class="qlabel">Training loss</div>
+        <svg class="cv" viewBox="0 0 420 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Training loss over 50 epochs falling from 1.10 to 0.041.">
+          <g font-family="Spline Sans Mono" font-size="10" fill="#6B6558">
+            <line x1="44" y1="214.0" x2="404" y2="214.0" stroke="#DAD4C4" stroke-width="1"/>
+            <text x="36" y="217.5" text-anchor="end">0</text>
+            <line x1="44" y1="150.7" x2="404" y2="150.7" stroke="#DAD4C4" stroke-width="1"/>
+            <text x="36" y="154.2" text-anchor="end">0.4</text>
+            <line x1="44" y1="87.3" x2="404" y2="87.3" stroke="#DAD4C4" stroke-width="1"/>
+            <text x="36" y="90.8" text-anchor="end">0.8</text>
+            <line x1="44" y1="24.0" x2="404" y2="24.0" stroke="#DAD4C4" stroke-width="1"/>
+            <text x="36" y="27.5" text-anchor="end">1.2</text>
+            <line x1="44.0" y1="214" x2="44.0" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="44.0" y="230" text-anchor="middle">1</text>
+            <line x1="110.1" y1="214" x2="110.1" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="110.1" y="230" text-anchor="middle">10</text>
+            <line x1="183.6" y1="214" x2="183.6" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="183.6" y="230" text-anchor="middle">20</text>
+            <line x1="257.1" y1="214" x2="257.1" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="257.1" y="230" text-anchor="middle">30</text>
+            <line x1="330.5" y1="214" x2="330.5" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="330.5" y="230" text-anchor="middle">40</text>
+            <line x1="404.0" y1="214" x2="404.0" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="404.0" y="230" text-anchor="middle">50</text>
+            <line x1="44" y1="214" x2="404" y2="214" stroke="#1C1914" stroke-width="1.2"/>
+            <line x1="44" y1="24" x2="44" y2="214" stroke="#1C1914" stroke-width="1.2"/>
+            <text x="224.0" y="246" text-anchor="middle" fill="#6B6558">epoch</text>
+            <path class="draw" pathLength="1" d="M44.0 39.1 L51.3 74.2 L58.7 90.0 L66.0 104.3 L73.4 110.2 L80.7 115.9 L88.1 118.4 L95.4 122.1 L102.8 125.7 L110.1 132.2 L117.5 134.1 L124.8 139.9 L132.2 147.1 L139.5 149.0 L146.9 151.3 L154.2 155.1 L161.6 159.4 L168.9 158.6 L176.2 165.4 L183.6 169.4 L190.9 174.0 L198.3 174.3 L205.6 175.5 L213.0 179.2 L220.3 180.2 L227.7 183.1 L235.0 186.4 L242.4 186.5 L249.7 190.3 L257.1 192.4 L264.4 190.6 L271.8 192.6 L279.1 198.7 L286.4 196.8 L293.8 200.2 L301.1 199.0 L308.5 202.3 L315.8 201.6 L323.2 202.3 L330.5 204.0 L337.9 204.0 L345.2 206.0 L352.6 203.7 L359.9 205.5 L367.3 207.5 L374.6 208.9 L382.0 206.7 L389.3 209.8 L396.7 206.9 L404.0 207.5" fill="none" stroke="#8E2B1F" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+            <circle class="ann" cx="44.0" cy="39.1" r="3.6" fill="#8E2B1F"/>
+            <circle class="ann" cx="404.0" cy="207.5" r="3.6" fill="#8E2B1F"/>
+            <text class="ann" x="52.0" y="43.1" fill="#1C1914">1.105</text>
+            <text class="ann" x="396.0" y="197.5" text-anchor="end" fill="#1C1914">0.041</text>
+          </g>
+        </svg>
           </div>
-          <div class="fig-cap"><b>Fig. 3.</b> Training loss &amp; test accuracy, 50 epochs.</div>
+          <div class="curve"><div class="qlabel">Test accuracy</div>
+        <svg class="cv" viewBox="0 0 420 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Test accuracy on 18 held-out samples over 50 epochs. It reaches 100 percent by epoch 13, drops to 22 percent from epoch 15 to 41, below the one-in-three chance level, and returns to 100 percent by epoch 45.">
+          <g font-family="Spline Sans Mono" font-size="10" fill="#6B6558">
+            <line x1="44" y1="214.0" x2="404" y2="214.0" stroke="#DAD4C4" stroke-width="1"/>
+            <text x="36" y="217.5" text-anchor="end">0%</text>
+            <line x1="44" y1="166.5" x2="404" y2="166.5" stroke="#DAD4C4" stroke-width="1"/>
+            <text x="36" y="170.0" text-anchor="end">25%</text>
+            <line x1="44" y1="119.0" x2="404" y2="119.0" stroke="#DAD4C4" stroke-width="1"/>
+            <text x="36" y="122.5" text-anchor="end">50%</text>
+            <line x1="44" y1="71.5" x2="404" y2="71.5" stroke="#DAD4C4" stroke-width="1"/>
+            <text x="36" y="75.0" text-anchor="end">75%</text>
+            <line x1="44" y1="24.0" x2="404" y2="24.0" stroke="#DAD4C4" stroke-width="1"/>
+            <text x="36" y="27.5" text-anchor="end">100%</text>
+            <line x1="44.0" y1="214" x2="44.0" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="44.0" y="230" text-anchor="middle">1</text>
+            <line x1="110.1" y1="214" x2="110.1" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="110.1" y="230" text-anchor="middle">10</text>
+            <line x1="183.6" y1="214" x2="183.6" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="183.6" y="230" text-anchor="middle">20</text>
+            <line x1="257.1" y1="214" x2="257.1" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="257.1" y="230" text-anchor="middle">30</text>
+            <line x1="330.5" y1="214" x2="330.5" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="330.5" y="230" text-anchor="middle">40</text>
+            <line x1="404.0" y1="214" x2="404.0" y2="218" stroke="#1C1914" stroke-width="1"/>
+            <text x="404.0" y="230" text-anchor="middle">50</text>
+            <line x1="44" y1="214" x2="404" y2="214" stroke="#1C1914" stroke-width="1.2"/>
+            <line x1="44" y1="24" x2="44" y2="214" stroke="#1C1914" stroke-width="1.2"/>
+            <text x="224.0" y="246" text-anchor="middle" fill="#6B6558">epoch</text>
+            <line x1="44" y1="150.7" x2="404" y2="150.7" stroke="#1C1914" stroke-width="1" stroke-dasharray="4 4" opacity=".55"/>
+            <text x="52" y="163.7" fill="#6B6558">chance · 1 in 3</text>
+            <path class="draw" pathLength="1" d="M44.0 129.6 H51.3 V129.6 H58.7 V129.6 H66.0 V129.6 H73.4 V129.6 H80.7 V129.6 H88.1 V129.6 H95.4 V129.6 H102.8 V129.6 H110.1 V129.6 H117.5 V129.6 H124.8 V45.1 H132.2 V24.0 H139.5 V24.0 H146.9 V171.8 H154.2 V171.8 H161.6 V171.8 H168.9 V171.8 H176.2 V171.8 H183.6 V171.8 H190.9 V171.8 H198.3 V171.8 H205.6 V171.8 H213.0 V171.8 H220.3 V171.8 H227.7 V171.8 H235.0 V171.8 H242.4 V171.8 H249.7 V171.8 H257.1 V171.8 H264.4 V171.8 H271.8 V171.8 H279.1 V171.8 H286.4 V171.8 H293.8 V171.8 H301.1 V171.8 H308.5 V171.8 H315.8 V171.8 H323.2 V171.8 H330.5 V171.8 H337.9 V171.8 H345.2 V140.1 H352.6 V108.4 H359.9 V108.4 H367.3 V24.0 H374.6 V24.0 H382.0 V24.0 H389.3 V24.0 H396.7 V24.0 H404.0 V24.0" fill="none" stroke="#B08A2E" stroke-width="2.4" stroke-linejoin="miter"/>
+            <circle class="ann" cx="404.0" cy="24.0" r="3.6" fill="#B08A2E"/>
+            <text class="ann" x="396.0" y="38.0" text-anchor="end" fill="#1C1914">100%</text>
+            <text class="ann" x="242.4" y="187.8" text-anchor="middle" fill="#7A5D14">22% for 27 epochs</text>
+          </g>
+        </svg>
+          </div>
         </div>
-        <div class="fig">
-          <img src="assets/img/genre-classifier-spectrograms.webp" alt="Mel-spectrograms of the three genre classes: Rock, Classical, and Jazz" width="1772" height="432" loading="lazy">
-          <div class="fig-cap"><b>Fig. 4.</b> What the model actually "sees".</div>
-        </div>
+        <div class="fig-cap"><b>Fig. 3.</b> Training loss over 50 full-batch steps, 1.105 to 0.041, and accuracy on an 18-sample held-out set, which moves in steps of 5.6 points. Accuracy sits below the 1-in-3 chance line for 27 epochs before settling at 100%.</div>
       </div>
-      <div class="dash">
-        <div class="dash-label">Training loss, 50 epochs</div>
-        <div class="dash-card">
-          <div class="dash-chart">
-            <canvas id="trainingLossChart" role="img" aria-label="Line chart showing training loss decreasing from about 1.4 to 0.15 over 50 epochs"></canvas>
-          </div>
+      <div class="fig">
+        <div class="specs">
+          <figure class="spec"><img src="assets/img/genre-spec-rock.webp" alt="Rock spectrogram: a bright thin band near the bottom edge, at low frequency, over a speckled noise floor" width="384" height="384" loading="lazy"><img class="zoom" src="assets/img/genre-strip-rock.webp" alt="Enlarged lowest 12 frequency rows of the rock spectrogram: one bright band over a speckled floor" width="384" height="96" loading="lazy"><figcaption>Rock<small>400 Hz + noise</small></figcaption></figure>
+          <figure class="spec"><img src="assets/img/genre-spec-classical.webp" alt="Classical spectrogram: a bright thin band near the bottom edge with a fainter harmonic band just above it, on a clean background" width="384" height="384" loading="lazy"><img class="zoom" src="assets/img/genre-strip-classical.webp" alt="Enlarged lowest 12 frequency rows of the classical spectrogram: a bright band with a fainter harmonic band a few rows above it" width="384" height="96" loading="lazy"><figcaption>Classical<small>250 Hz + harmonic</small></figcaption></figure>
+          <figure class="spec"><img src="assets/img/genre-spec-jazz.webp" alt="Jazz spectrogram: a bright thin band very close to the bottom edge with a faint partial just above it, on a clean background" width="384" height="384" loading="lazy"><img class="zoom" src="assets/img/genre-strip-jazz.webp" alt="Enlarged lowest 12 frequency rows of the jazz spectrogram: a bright band with a fainter partial band just above it" width="384" height="96" loading="lazy"><figcaption>Jazz<small>150 Hz + partial</small></figcaption></figure>
         </div>
+        <div class="fig-cap"><b>Fig. 4.</b> What the model actually &ldquo;sees&rdquo;: the 128&times;128 spectrogram it is given, low frequencies at the bottom, three seconds left to right, colored by square-root magnitude. The thin strip under each is its lowest 12 of 128 frequency rows, enlarged: the genres differ mainly in where one band sits.</div>
       </div>
       <div class="tags"><span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">CNNs</span><span class="tag">audio → image</span></div>
       <div class="card-links"><a class="mini-btn" href="https://github.com/AkshatKandwal007/ai-music-classifier" target="_blank" rel="noopener">View code ↗</a></div>
@@ -824,7 +897,6 @@
 </footer>
 
 <script src="assets/js/anime.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 (function(){
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -863,66 +935,16 @@
      (which animates the .plate card itself, not the image). ------------- */
   (function figReveals(){
     if (reduced || !window.anime || !('IntersectionObserver' in window)) return;
-    const kindOf = img => {
-      if (img.alt.includes('Training loss decreasing')) return 'axis-wipe';
-      return 'fade';
-    };
-
     document.querySelectorAll('#projects .fig img').forEach(img => {
-      const kind = kindOf(img);
-      const axisPath = kind === 'axis-wipe'
-        ? img.closest('.fig-media').querySelector('.fig-axis path')
-        : null;
-      let axisLen = 0;
-
       // Hide only now that anime + observer are present and motion is allowed,
       // so nothing is ever left invisible if the library fails to load.
-      if (kind === 'wipe' || kind === 'axis-wipe') {
-        img.style.clipPath = 'inset(0 100% 0 0)';
-      } else {
-        img.style.transform = 'translateY(14px)';
-      }
+      img.style.transform = 'translateY(14px)';
       img.style.opacity = 0;
-      if (axisPath) {
-        axisLen = axisPath.getTotalLength();
-        axisPath.style.strokeDasharray = axisLen;
-        axisPath.style.strokeDashoffset = axisLen;
-      }
-
-      // Observe the (unclipped) .fig wrapper rather than the image itself:
-      // some browsers compute intersection against an element's post-clip-path
-      // visual area, and a clipped image starts at zero visible width, which
-      // would leave isIntersecting permanently false and the reveal dead.
       const obs = new IntersectionObserver(entries => {
         entries.forEach(en => {
           if (!en.isIntersecting) return;
           obs.unobserve(en.target);
-
-          const wipeIn = (duration) => {
-            anime({ targets: img, opacity: [0,1], duration: 260, easing: 'easeOutQuad' });
-            const wipe = { r: 100 };
-            anime({
-              targets: wipe, r: 0, duration, easing: 'easeInOutQuad',
-              update: () => { img.style.clipPath = 'inset(0 ' + wipe.r + '% 0 0)'; },
-              complete: () => {
-                img.style.clipPath = 'none';
-                if (axisPath) anime({ targets: axisPath.closest('.fig-axis'), opacity: [1,0], duration: 400, easing: 'easeOutQuad' });
-              }
-            });
-          };
-
-          if (kind === 'wipe') {
-            wipeIn(1400);
-          } else if (kind === 'axis-wipe') {
-            if (axisPath) {
-              anime({ targets: axisPath, strokeDashoffset: [axisLen, 0], duration: 420, easing: 'easeOutQuad',
-                complete: () => wipeIn(2400) });
-            } else {
-              wipeIn(2400);
-            }
-          } else {
-            anime({ targets: img, opacity: [0,1], translateY: [14,0], duration: 700, easing: 'easeOutQuad' });
-          }
+          anime({ targets: img, opacity: [0,1], translateY: [14,0], duration: 700, easing: 'easeOutQuad' });
         });
       }, { threshold: 0.35 });
       obs.observe(img.closest('.fig'));
@@ -1050,6 +1072,29 @@
     })(t0);
   }
 
+  /* ---- Plate IV: the curves draw themselves, loss first, then accuracy ---- */
+  (function curveDraw(){
+    const wrap = document.querySelector('.curves');
+    if (!wrap || reduced || !window.anime || !('IntersectionObserver' in window)) return;
+    const svgs = [...wrap.querySelectorAll('.cv')];
+    svgs.forEach(s => {
+      s.querySelectorAll('.draw').forEach(p => { p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = 1; });
+      s.querySelectorAll('.ann').forEach(a => { a.style.opacity = 0; });
+    });
+    const io = new IntersectionObserver(es => {
+      if (!es[0].isIntersecting) return;
+      io.disconnect();
+      svgs.forEach((s, i) => {
+        anime({
+          targets: s.querySelector('.draw'), strokeDashoffset: [1, 0],
+          duration: 1500 + i * 300, delay: i * 350, easing: 'easeInOutSine',
+          complete: () => anime({ targets: s.querySelectorAll('.ann'), opacity: [0,1], duration: 400, easing: 'easeOutQuad' })
+        });
+      });
+    }, { threshold: .4 });
+    io.observe(wrap);
+  })();
+
   /* ---- Plate III: the ladder bars race in, latency chasing quality ---- */
   (function ladderRace(){
     const lad = document.querySelector('.ladder');
@@ -1117,70 +1162,6 @@
   }, {threshold:.1});
   revealables.forEach(el => revObs.observe(el));
 
-  /* ---- "By the numbers" mini-dashboards (Chart.js) ---- */
-  (function dashboardCharts(){
-    if (!window.Chart) return;
-    const css = getComputedStyle(document.documentElement);
-    const crimson = css.getPropertyValue('--crimson').trim();
-    const gold = css.getPropertyValue('--gold').trim();
-    const sub = css.getPropertyValue('--sub').trim();
-    const rule = css.getPropertyValue('--rule').trim();
-    const serif = "'Newsreader', Georgia, serif";
-
-    const lossEl = document.getElementById('trainingLossChart');
-    if (lossEl) {
-      const epochs = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
-      const loss = [1.40, 0.97, 0.68, 0.49, 0.37, 0.29, 0.23, 0.20, 0.17, 0.16, 0.15];
-      const opts = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            backgroundColor: css.getPropertyValue('--ink').trim(),
-            titleFont: { family: serif },
-            bodyFont: { family: serif },
-            padding: 8,
-            cornerRadius: 0,
-            displayColors: false,
-            callbacks: {
-              title: (items) => 'Epoch ' + items[0].label,
-              label: (item) => 'Loss: ' + item.formattedValue
-            }
-          }
-        },
-        scales: {
-          x: {
-            title: { display: true, text: 'Epoch', font: { family: serif, size: 12 }, color: sub },
-            ticks: { font: { family: serif, size: 11 }, color: sub },
-            grid: { color: rule }
-          },
-          y: {
-            ticks: { font: { family: serif, size: 11 }, color: sub },
-            grid: { color: rule }
-          }
-        }
-      };
-      if (reduced) opts.animation = false;
-      new Chart(lossEl, {
-        type: 'line',
-        data: {
-          labels: epochs,
-          datasets: [{
-            data: loss,
-            borderColor: crimson,
-            backgroundColor: gold + '26',
-            fill: true,
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            tension: 0.35,
-            borderWidth: 2
-          }]
-        },
-        options: opts
-      });
-    }
-  })();
 
   /* ---- footer nose rain easter egg ---- */
   function noseRain(){
