@@ -83,7 +83,8 @@
   .rule-double{border-top:1px solid var(--rule-dark);border-bottom:3px double var(--rule-dark);height:7px;max-width:960px;margin:28px auto 0}
 
   .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center;padding:52px 0 56px;text-align:left}
-  @media(max-width:840px){.hero{grid-template-columns:1fr}}
+  @media(max-width:1008px){.hero{padding-left:24px;padding-right:24px}}
+  @media(max-width:840px){.hero{grid-template-columns:1fr}.scan-frame{max-width:440px;margin:0 auto}}
   .cite-box{
     font-family:var(--serif);font-size:.95rem;background:var(--paper-2);border-left:3px solid var(--crimson);
     padding:14px 18px;margin-bottom:26px;cursor:pointer;color:#3E3A30;
@@ -212,10 +213,46 @@
   .dash-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px}
   .dash-card{background:var(--paper);border:1px solid var(--ink);padding:1rem 1.25rem}
   .dash-chart{position:relative;height:200px}
-  .dash-chart-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-weight:700;font-size:2.2rem;color:var(--ink);pointer-events:none}
-  .dash-ring{max-width:220px}
-  .dash-ring .dash-chart{height:150px}
-  .dash-ring .dash-chart-center{font-size:1.45rem}
+  .qgrid{display:grid;grid-template-columns:1fr 1.15fr 1fr}
+  .qpanel{padding:18px 20px 16px;border-left:1px solid var(--rule);display:flex;flex-direction:column}
+  .qpanel:first-child{border-left:none}
+  .qlabel{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--crimson);margin-bottom:12px}
+  .qlabel b{color:var(--ink);font-weight:500;margin-right:8px}
+  .qsvg{width:100%;height:auto;display:block;max-height:330px;margin:auto}
+  .qpanel:first-child .qsvg{max-width:260px}
+  .qbell{max-width:380px}
+  .qnote{font-family:var(--serif);font-style:italic;font-size:.82rem;color:var(--sub);line-height:1.5;margin:10px 0 0!important;max-width:none}
+  .qkey{display:inline-block;width:16px;height:0;border-top:1.5px solid rgba(142,43,31,.55);vertical-align:middle;margin:0 6px 0 0}
+  .qkey-dash{border-top:2px dashed var(--gold);margin-left:10px}
+  .qsteps ol{list-style:none;display:grid;gap:14px;margin:auto 0}
+  .qstep{border-left:2px solid var(--gold);padding-left:12px;display:grid;gap:3px}
+  .qstep .eq{font-family:var(--serif);font-style:italic;font-size:1.12rem;color:var(--ink);line-height:1.3}
+  .qstep .why{font-size:.82rem;color:var(--sub);line-height:1.45}
+  .qresult{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-top:1px solid var(--rule);margin-top:10px;padding-top:10px;font-family:var(--mono);font-size:11px;color:var(--sub)}
+  .qresult strong{font-family:var(--serif);font-size:1.7rem;color:var(--crimson);font-weight:700}
+  .qscale{border-top:1px solid var(--rule);padding:16px 28px 12px}
+  .qscale-title{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sub);margin-bottom:34px}
+  .qtrack{position:relative;height:10px;background:var(--paper-2);border:1px solid var(--rule-dark)}
+  .qfill{position:absolute;inset:0 auto 0 0;background:var(--crimson);opacity:.85}
+  .qmark{position:absolute;top:-7px;width:0;height:22px;border-left:2px solid var(--ink)}
+  .qmark em{position:absolute;white-space:nowrap;font-family:var(--mono);font-style:normal;font-size:10.5px;letter-spacing:.04em;color:var(--ink);transform:translateX(-50%)}
+  .qmark-pt{border-left-color:var(--gold)}
+  .qmark-pt em{bottom:26px}
+  .qmark-mean em{top:26px}
+  .qticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--sub);margin-top:4px}
+  .qscale{padding-bottom:40px}
+  .qticks{margin-top:6px}
+  #lmMesh{opacity:0;transition:opacity .7s ease}
+  #lmMesh.on{opacity:.3}
+  @media(max-width:840px){
+    .qgrid{grid-template-columns:1fr}
+    .qpanel{border-left:none;border-top:1px solid var(--rule)}
+    .qpanel:first-child{border-top:none}
+    .qsvg{max-height:300px}
+    .qscale{padding:16px 16px 44px}
+    .qmark-mean em{transform:translateX(-85%)}
+    .qmark-pt em{transform:translateX(-100%)}
+  }
   .tags{display:flex;flex-wrap:wrap;gap:0 14px;margin-top:6px}
   .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--sub)}
   .tag::before{content:"· ";color:var(--gold)}
@@ -314,31 +351,36 @@
 
     <div>
       <div class="scan-frame">
-        <svg viewBox="0 0 340 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A stylized profile with tracked landmark dots, from published landmark-tracking research">
+        <svg viewBox="0 0 340 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A front-view nose outline with the nine tracked landmark points: four down the bridge and five along the base, from published landmark-tracking research">
           <g stroke="#EFEBDE" stroke-width="1.5">
             <line x1="0" y1="82" x2="340" y2="82"/><line x1="0" y1="164" x2="340" y2="164"/><line x1="0" y1="246" x2="340" y2="246"/>
             <line x1="85" y1="0" x2="85" y2="330"/><line x1="170" y1="0" x2="170" y2="330"/><line x1="255" y1="0" x2="255" y2="330"/>
           </g>
-          <path d="M150 26 C118 58 116 96 124 134 C128 156 120 170 110 184
-            C104 192 106 198 118 200 C112 210 116 214 110 222
-            C104 230 110 236 122 236 C120 248 128 256 144 256 C148 282 146 302 138 322"
-            fill="none" stroke="#1C1914" stroke-width="3" stroke-linecap="round"/>
-          <polyline points="140,72 124,134 116,160 110,184 118,200 110,222 122,236 144,256 140,290"
-            fill="none" stroke="#8E2B1F" stroke-width="1.2" stroke-dasharray="5 5" opacity=".65"/>
-          <g id="lmGroup" fill="#8E2B1F" stroke="#1C1914" stroke-width="1.4">
-            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 1 of 9"><circle class="lm-ring" cx="140" cy="72" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="140" cy="72" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="140" cy="72" r="5"/></g>
-            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 2 of 9"><circle class="lm-ring" cx="124" cy="134" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="124" cy="134" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="124" cy="134" r="5"/></g>
-            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 3 of 9"><circle class="lm-ring" cx="116" cy="160" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="116" cy="160" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="116" cy="160" r="5"/></g>
-            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 4 of 9"><circle class="lm-ring" cx="110" cy="184" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="110" cy="184" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="110" cy="184" r="5"/></g>
-            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 5 of 9"><circle class="lm-ring" cx="118" cy="200" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="118" cy="200" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="118" cy="200" r="5"/></g>
-            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 6 of 9"><circle class="lm-ring" cx="110" cy="222" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="110" cy="222" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="110" cy="222" r="5"/></g>
-            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 7 of 9"><circle class="lm-ring" cx="122" cy="236" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="122" cy="236" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="122" cy="236" r="5"/></g>
-            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 8 of 9"><circle class="lm-ring" cx="144" cy="256" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="144" cy="256" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="144" cy="256" r="5"/></g>
-            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 9 of 9"><circle class="lm-ring" cx="140" cy="290" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="140" cy="290" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="140" cy="290" r="5"/></g>
+          <g fill="none" stroke="#1C1914" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M152 40 C150 110 146 165 134 198 C116 210 104 230 114 246 C124 260 146 262 158 254"/><path d="M188 40 C190 110 194 165 206 198 C224 210 236 230 226 246 C216 260 194 262 182 254"/>
+            <path d="M148 210 C152 226 188 226 192 210" stroke-width="2"/>
+            <path d="M132 244 C136 236 148 236 152 246 M208 244 C204 236 192 236 188 246" stroke-width="2"/>
           </g>
-          <text x="158" y="69" font-family="Spline Sans Mono" font-size="10" fill="#6B6558">P1 · nasion</text>
-          <text x="128" y="182" font-family="Spline Sans Mono" font-size="10" fill="#6B6558">P4 · tip</text>
-          <text x="160" y="260" font-family="Spline Sans Mono" font-size="10" fill="#6B6558">9 pts → 36 dist.</text>
+          <g fill="none" stroke="#8E2B1F" stroke-width="1.2" stroke-dasharray="5 5" opacity=".65">
+            <polyline points="170,72 170,120 170,168 170,214"/>
+            <polyline points="118,240 147,257 170,262 193,257 222,240"/>
+          </g>
+          <g id="lmMesh" stroke="#8E2B1F" stroke-width=".9" fill="none"></g>
+          <g id="lmGroup" fill="#8E2B1F" stroke="#1C1914" stroke-width="1.4">
+            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 1 of 9"><circle class="lm-ring" cx="170" cy="72" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="170" cy="72" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="170" cy="72" r="5"/></g>
+            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 2 of 9"><circle class="lm-ring" cx="170" cy="120" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="170" cy="120" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="170" cy="120" r="5"/></g>
+            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 3 of 9"><circle class="lm-ring" cx="170" cy="168" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="170" cy="168" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="170" cy="168" r="5"/></g>
+            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 4 of 9"><circle class="lm-ring" cx="170" cy="214" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="170" cy="214" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="170" cy="214" r="5"/></g>
+            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 5 of 9"><circle class="lm-ring" cx="118" cy="240" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="118" cy="240" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="118" cy="240" r="5"/></g>
+            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 6 of 9"><circle class="lm-ring" cx="147" cy="257" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="147" cy="257" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="147" cy="257" r="5"/></g>
+            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 7 of 9"><circle class="lm-ring" cx="170" cy="262" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="170" cy="262" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="170" cy="262" r="5"/></g>
+            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 8 of 9"><circle class="lm-ring" cx="193" cy="257" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="193" cy="257" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="193" cy="257" r="5"/></g>
+            <g class="lm-hit" tabindex="0" role="button" aria-label="Landmark point 9 of 9"><circle class="lm-ring" cx="222" cy="240" r="11" fill="none" stroke="#B08A2E" stroke-width="1.5"/><circle cx="222" cy="240" r="15" fill="transparent" stroke="none"/><circle class="lm-dot" cx="222" cy="240" r="5"/></g>
+          </g>
+          <line x1="178" y1="214" x2="240" y2="214" stroke="#DAD4C4" stroke-width="1"/>
+          <text x="196" y="69" font-family="Spline Sans Mono" font-size="10" fill="#6B6558">P1 · nasion</text>
+          <text x="244" y="217" font-family="Spline Sans Mono" font-size="10" fill="#6B6558">P4 · tip</text>
+          <text x="170" y="304" text-anchor="middle" font-family="Spline Sans Mono" font-size="10" fill="#6B6558">9 pts → 36 dist.</text>
         </svg>
         <div class="cross-line" id="crossV"></div>
         <div class="cross-line" id="crossH"></div>
@@ -464,18 +506,101 @@
         measure for preoperative planning. Co-authored with IIT Roorkee, peer-reviewed, published, and cited
         5+ times on Google Scholar, all before my first university lecture.
       </p>
-      <div class="fig" style="max-width:620px">
-        <img src="assets/img/rhinoplasty-correlation.webp" alt="Correlation heatmap of the 36 nose-landmark distance features" width="1626" height="1715" loading="lazy">
-        <div class="fig-cap"><b>Fig. 1.</b> Correlation matrix across the 36 distance features.</div>
-      </div>
-      <div class="dash dash-ring">
-        <div class="dash-label">Mean defect quantification (Q)</div>
-        <div class="dash-card">
-          <div class="dash-chart">
-            <canvas id="landmarkAccuracyChart" role="img" aria-label="Doughnut chart showing a mean defect quantification Q of 76.2% across 250 images, with the remainder shown as an unfilled ring"></canvas>
-            <div class="dash-chart-center" aria-hidden="true">76.2%</div>
-          </div>
+      <div class="fig qfig">
+        <div class="qgrid">
+        <div class="qpanel">
+          <div class="qlabel"><b>1</b>Nine points, 36 distances</div>
+          <svg class="qsvg" viewBox="70 34 200 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Front-view nose outline with nine landmark points joined by all 36 pairwise distances. Five distances along the base are drawn dashed because they are excluded as low-confidence.">
+            <g fill="none" stroke="#1C1914" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M152 40 C150 110 146 165 134 198 C116 210 104 230 114 246 C124 260 146 262 158 254"/><path d="M188 40 C190 110 194 165 206 198 C224 210 236 230 226 246 C216 260 194 262 182 254"/><path d="M148 210 C152 226 188 226 192 210" stroke-width="1.6"/><path d="M132 244 C136 236 148 236 152 246 M208 244 C204 236 192 236 188 246" stroke-width="1.6"/>
+            </g>
+            <g stroke="#8E2B1F" stroke-width=".8" opacity=".38">
+              <line x1="170" y1="72" x2="170" y2="120"/>
+              <line x1="170" y1="72" x2="170" y2="168"/>
+              <line x1="170" y1="72" x2="170" y2="214"/>
+              <line x1="170" y1="72" x2="118" y2="240"/>
+              <line x1="170" y1="72" x2="147" y2="257"/>
+              <line x1="170" y1="72" x2="170" y2="262"/>
+              <line x1="170" y1="72" x2="193" y2="257"/>
+              <line x1="170" y1="72" x2="222" y2="240"/>
+              <line x1="170" y1="120" x2="170" y2="168"/>
+              <line x1="170" y1="120" x2="170" y2="214"/>
+              <line x1="170" y1="120" x2="118" y2="240"/>
+              <line x1="170" y1="120" x2="147" y2="257"/>
+              <line x1="170" y1="120" x2="170" y2="262"/>
+              <line x1="170" y1="120" x2="193" y2="257"/>
+              <line x1="170" y1="120" x2="222" y2="240"/>
+              <line x1="170" y1="168" x2="170" y2="214"/>
+              <line x1="170" y1="168" x2="118" y2="240"/>
+              <line x1="170" y1="168" x2="147" y2="257"/>
+              <line x1="170" y1="168" x2="170" y2="262"/>
+              <line x1="170" y1="168" x2="193" y2="257"/>
+              <line x1="170" y1="168" x2="222" y2="240"/>
+              <line x1="170" y1="214" x2="118" y2="240"/>
+              <line x1="170" y1="214" x2="147" y2="257"/>
+              <line x1="170" y1="214" x2="170" y2="262"/>
+              <line x1="170" y1="214" x2="193" y2="257"/>
+              <line x1="170" y1="214" x2="222" y2="240"/>
+              <line x1="118" y1="240" x2="170" y2="262"/>
+              <line x1="118" y1="240" x2="193" y2="257"/>
+              <line x1="147" y1="257" x2="193" y2="257"/>
+              <line x1="147" y1="257" x2="222" y2="240"/>
+              <line x1="170" y1="262" x2="222" y2="240"/>
+            </g>
+            <g>
+              <line x1="118" y1="240" x2="147" y2="257" stroke="#B08A2E" stroke-width="1.6" stroke-dasharray="3 3"/>
+              <line x1="118" y1="240" x2="222" y2="240" stroke="#B08A2E" stroke-width="1.6" stroke-dasharray="3 3"/>
+              <line x1="147" y1="257" x2="170" y2="262" stroke="#B08A2E" stroke-width="1.6" stroke-dasharray="3 3"/>
+              <line x1="170" y1="262" x2="193" y2="257" stroke="#B08A2E" stroke-width="1.6" stroke-dasharray="3 3"/>
+              <line x1="193" y1="257" x2="222" y2="240" stroke="#B08A2E" stroke-width="1.6" stroke-dasharray="3 3"/>
+            </g>
+            <g fill="#8E2B1F" stroke="#FAF8F2" stroke-width="1.2"><circle cx="170" cy="72" r="4.2"/><circle cx="170" cy="120" r="4.2"/><circle cx="170" cy="168" r="4.2"/><circle cx="170" cy="214" r="4.2"/><circle cx="118" cy="240" r="4.2"/><circle cx="147" cy="257" r="4.2"/><circle cx="170" cy="262" r="4.2"/><circle cx="193" cy="257" r="4.2"/><circle cx="222" cy="240" r="4.2"/></g>
+            <g font-family="Spline Sans Mono" font-size="10" fill="#6B6558" stroke="#fff" stroke-width="3" paint-order="stroke">
+              <text x="182" y="75">28</text><text x="182" y="123">29</text><text x="182" y="171">30</text><text x="182" y="217">31</text>
+            </g>
+          </svg>
+          <p class="qnote"><span class="qkey qkey-solid"></span>31 distances used <span class="qkey qkey-dash"></span>5 excluded as low-confidence (points 32–36 along the base)</p>
         </div>
+        <div class="qpanel qsteps">
+          <div class="qlabel"><b>2</b>Normalise, then standardise</div>
+          <ol>
+            <li class="qstep"><span class="eq">n<sub>ij</sub> = minmax(d<sub>ij</sub>)</span><span class="why">Min-max scale every distance so photo size, lighting and lens don&rsquo;t matter.</span></li>
+            <li class="qstep"><span class="eq">k<sub>ij</sub> = (n<sub>ij</sub> &minus; &mu;<sub>ij</sub>) / &sigma;<sub>ij</sub></span><span class="why">How many standard deviations each distance sits from the ~250 post-surgery images.</span></li>
+            <li class="qstep"><span class="eq">z<sup>+</sup>, z<sup>&minus;</sup> = table(mean k<sup>+</sup>, mean k<sup>&minus;</sup>)</span><span class="why">Average the positive and the negative shifts, then look each up in a z-table.</span></li>
+            <li class="qstep"><span class="eq">Q = max(z<sup>+</sup>, z<sup>&minus;</sup>) &times; 100</span><span class="why">0 to 100%. Higher means a larger defect.</span></li>
+          </ol>
+        </div>
+        <div class="qpanel">
+          <div class="qlabel"><b>3</b>Score one patient</div>
+          <svg class="qsvg qbell" viewBox="0 28 300 208" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Normal curve of post-surgery reference distances. The area up to +1.092 standard deviations is 0.8621 and the area up to minus 1.245 standard deviations is 0.1075. Q is the larger, 86.21 percent.">
+            <path d="M22.0 199.1 L24.9 198.9 L27.7 198.6 L30.6 198.3 L33.4 197.9 L36.3 197.4 L39.2 196.8 L42.0 196.1 L44.9 195.3 L47.8 194.3 L50.6 193.2 L53.5 191.8 L56.3 190.3 L59.2 188.6 L62.1 186.6 L64.9 184.4 L67.8 181.9 L70.6 179.0 L73.5 175.9 L76.4 172.4 L79.2 168.6 L82.1 164.5 L84.9 160.0 L87.8 155.2 L90.7 150.1 L93.5 144.6 L96.4 138.9 L99.3 132.9 L102.1 126.7 L105.0 120.4 L107.8 113.9 L110.7 107.4 L113.6 100.9 L116.4 94.5 L119.3 88.3 L122.1 82.3 L125.0 76.6 L127.9 71.3 L130.7 66.4 L133.6 62.1 L136.5 58.4 L139.3 55.3 L142.2 52.8 L145.0 51.2 L147.9 50.2 L150.8 50.0 L153.6 50.6 L156.5 52.0 L159.3 54.0 L162.2 56.8 L165.1 60.3 L167.9 64.3 L170.8 69.0 L173.7 74.1 L176.5 79.6 L179.4 85.4 L182.2 91.6 L185.1 97.9 L188.0 104.4 L190.8 110.9 L193.7 117.4 L193.7 200 L22.0 200 Z" fill="#8E2B1F" opacity=".16"/>
+            <path d="M22.0 199.1 L23.3 199.0 L24.6 198.9 L25.9 198.8 L27.2 198.7 L28.5 198.5 L29.8 198.4 L31.1 198.2 L32.4 198.0 L33.7 197.8 L35.0 197.6 L36.3 197.4 L37.6 197.1 L38.9 196.8 L40.2 196.5 L41.5 196.2 L42.9 195.9 L44.2 195.5 L45.5 195.1 L46.8 194.6 L48.1 194.2 L49.4 193.7 L50.7 193.1 L52.0 192.6 L53.3 191.9 L54.6 191.3 L55.9 190.6 L57.2 189.8 L58.5 189.0 L59.8 188.2 L61.1 187.3 L62.4 186.4 L63.7 185.4 L65.0 184.3 L66.3 183.2 L67.6 182.0 L68.9 180.8 L70.2 179.5 L71.5 178.1 L72.8 176.7 L74.1 175.2 L75.4 173.6 L76.7 172.0 L78.0 170.3 L79.3 168.5 L80.6 166.6 L82.0 164.7 L83.3 162.7 L84.6 160.7 L85.9 158.5 L87.2 156.3 L88.5 154.1 L89.8 151.7 L91.1 149.3 L92.4 146.9 L93.7 144.3 L95.0 141.7 L96.3 139.1 L97.6 136.4 L98.9 133.7 L100.2 130.9 L100.2 200 L22.0 200 Z" fill="#B08A2E" opacity=".45"/>
+            <path d="M22.0 199.1 L25.2 198.8 L28.4 198.5 L31.6 198.1 L34.8 197.6 L38.0 197.0 L41.2 196.3 L44.4 195.4 L47.6 194.3 L50.8 193.1 L54.0 191.6 L57.2 189.8 L60.4 187.8 L63.6 185.4 L66.8 182.8 L70.0 179.7 L73.2 176.3 L76.4 172.4 L79.6 168.1 L82.8 163.4 L86.0 158.3 L89.2 152.8 L92.4 146.8 L95.6 140.5 L98.8 133.9 L102.0 127.0 L105.2 119.9 L108.4 112.7 L111.6 105.4 L114.8 98.2 L118.0 91.1 L121.2 84.2 L124.4 77.8 L127.6 71.8 L130.8 66.3 L134.0 61.5 L137.2 57.5 L140.4 54.3 L143.6 51.9 L146.8 50.5 L150.0 50.0 L153.2 50.5 L156.4 51.9 L159.6 54.3 L162.8 57.5 L166.0 61.5 L169.2 66.3 L172.4 71.8 L175.6 77.8 L178.8 84.2 L182.0 91.1 L185.2 98.2 L188.4 105.4 L191.6 112.7 L194.8 119.9 L198.0 127.0 L201.2 133.9 L204.4 140.5 L207.6 146.8 L210.8 152.8 L214.0 158.3 L217.2 163.4 L220.4 168.1 L223.6 172.4 L226.8 176.3 L230.0 179.7 L233.2 182.8 L236.4 185.4 L239.6 187.8 L242.8 189.8 L246.0 191.6 L249.2 193.1 L252.4 194.3 L255.6 195.4 L258.8 196.3 L262.0 197.0 L265.2 197.6 L268.4 198.1 L271.6 198.5 L274.8 198.8 L278.0 199.1" fill="none" stroke="#1C1914" stroke-width="2"/>
+            <line x1="20" y1="200" x2="280" y2="200" stroke="#1C1914" stroke-width="1.2"/>
+            <line x1="150" y1="200" x2="150" y2="196" stroke="#1C1914" stroke-width="1.2"/>
+            <line x1="193.7" y1="117.4" x2="193.7" y2="206" stroke="#8E2B1F" stroke-width="1.6"/>
+            <line x1="100.2" y1="130.9" x2="100.2" y2="206" stroke="#B08A2E" stroke-width="1.6"/>
+            <g font-family="Spline Sans Mono" font-size="12">
+              <text x="198.7" y="109.4" fill="#8E2B1F">z⁺ = 0.8621</text>
+              <text x="95.2" y="122.9" fill="#7A5D14" text-anchor="end">z⁻ = 0.1075</text>
+              <text x="193.7" y="219" fill="#8E2B1F" text-anchor="middle">+1.092σ</text>
+              <text x="100.2" y="219" fill="#7A5D14" text-anchor="middle">−1.245σ</text>
+              <text x="150" y="42" fill="#6B6558" text-anchor="middle">post-surgery reference</text>
+            </g>
+          </svg>
+          <div class="qresult"><span>Q · sample patient</span><strong>86.21%</strong></div>
+        </div>
+        </div>
+        <div class="qscale" role="img" aria-label="Q scale from 0 to 100 percent. The mean across 250 images is 76.2 percent and the sample patient scores 86.21 percent.">
+          <div class="qscale-title">Q scale · higher = larger defect</div>
+          <div class="qtrack">
+            <span class="qfill" style="width:76.2%"></span>
+            <span class="qmark qmark-mean" style="left:76.2%"><em>mean, 250 images · 76.2%</em></span>
+            <span class="qmark qmark-pt" style="left:86.21%"><em>sample patient · 86.21%</em></span>
+          </div>
+          <div class="qticks"><span>0</span><span>100</span></div>
+        </div>
+        <div class="fig-cap"><b>Fig. 1.</b> From nine nose landmarks to a single defect score. Worked example from the paper: mean k<sup>+</sup> = 1.092, mean k<sup>&minus;</sup> = &minus;1.245.</div>
       </div>
       <div class="tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">facial landmarks</span><span class="tag">iBUG-300W</span><span class="tag">statistics</span><span class="tag">medical imaging</span></div>
     </div>
@@ -627,8 +752,8 @@
   /* ---- anime.js hero entrance (net-new; nothing else animates these) ---- */
   (function heroIntro(){
     if (reduced || !window.anime) return;
-    const seq = ['.vol-line', '.masthead h1', '.rule-double', '#helloChip',
-                 '.lead', '.hero-cta', '.scan-frame', '.keywords'];
+    const seq = ['.vol-line', '.masthead h1', '.tagline', '.rule-double', '#helloChip',
+                 '.lead', '.lede', '.hero-cta', '.scan-frame', '.keywords'];
     // hide synchronously so there's no flash before the timeline runs;
     // only reached when anime is loaded and motion is allowed, so nothing
     // is left invisible if the library is absent.
@@ -637,9 +762,11 @@
     anime.timeline({ easing: 'easeOutQuad', duration: 760 })
       .add({ targets: '.vol-line',    opacity: [0,1], translateY: [-8,0], duration: 560 })
       .add({ targets: '.masthead h1', opacity: [0,1], translateY: [16,0] }, '-=280')
+      .add({ targets: '.tagline',     opacity: [0,1], translateY: [10,0] }, '-=520')
       .add({ targets: '.rule-double', opacity: [0,1], scaleX: [0.55,1] },   '-=460')
       .add({ targets: '#helloChip',   opacity: [0,1], translateY: [10,0] }, '-=340')
       .add({ targets: '.lead',        opacity: [0,1], translateY: [12,0] }, '-=440')
+      .add({ targets: '.lede',        opacity: [0,1], translateY: [10,0] }, '-=560')
       .add({ targets: '.hero-cta',    opacity: [0,1], translateY: [10,0] }, '-=400')
       .add({ targets: '.scan-frame',  opacity: [0,1], translateY: [18,0], duration: 900 }, '-=520')
       .add({ targets: '.keywords',    opacity: [0,1] }, '-=560');
@@ -772,6 +899,15 @@
   /* ---- landmark hunt ---- */
   const hits = document.querySelectorAll('.lm-hit');
   const status = document.getElementById('lmStatus');
+  const mesh = document.getElementById('lmMesh');
+  /* the paper's 9 points form C(9,2) = 36 distances: draw them all once found */
+  const pts = [...hits].map(g => g.querySelector('.lm-dot'));
+  for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+    const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    l.setAttribute('x1', pts[i].getAttribute('cx')); l.setAttribute('y1', pts[i].getAttribute('cy'));
+    l.setAttribute('x2', pts[j].getAttribute('cx')); l.setAttribute('y2', pts[j].getAttribute('cy'));
+    mesh.appendChild(l);
+  }
   let found = 0, done = false;
   function hitLandmark(h){
     if (h.classList.contains('found') || done) return;
@@ -781,6 +917,7 @@
       status.textContent = 'CLICK THE DOTS · ' + found + '/' + hits.length;
     } else {
       done = true;
+      mesh.classList.add('on');
       status.textContent = 'ALL 9 FOUND · 36 DISTANCES · YOU\'RE HIRED';
       confetti();
     }
@@ -868,25 +1005,6 @@
     const sub = css.getPropertyValue('--sub').trim();
     const rule = css.getPropertyValue('--rule').trim();
     const serif = "'Newsreader', Georgia, serif";
-
-    const landmarkEl = document.getElementById('landmarkAccuracyChart');
-    if (landmarkEl) {
-      const opts = {
-        responsive: true,
-        maintainAspectRatio: false,
-        cutout: '72%',
-        plugins: { legend: { display: false }, tooltip: { enabled: false } }
-      };
-      if (reduced) opts.animation = false;
-      new Chart(landmarkEl, {
-        type: 'doughnut',
-        data: {
-          labels: ['Mean Q', 'Remaining'],
-          datasets: [{ data: [76.2, 23.8], backgroundColor: [crimson, rule], borderWidth: 0 }]
-        },
-        options: opts
-      });
-    }
 
     const lossEl = document.getElementById('trainingLossChart');
     if (lossEl) {
