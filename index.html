@@ -253,6 +253,32 @@
     .qmark-mean em{transform:translateX(-85%)}
     .qmark-pt em{transform:translateX(-100%)}
   }
+  .ladder{padding:16px 20px 6px}
+  .ladder-key{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--sub);margin-bottom:14px}
+  .ladder-key span::before{content:"";display:inline-block;width:14px;height:8px;margin-right:7px;vertical-align:baseline;background:var(--crimson)}
+  .ladder-key span+span::before{background:var(--gold);height:5px}
+  .lrow{display:grid;grid-template-columns:200px 1fr;gap:6px 16px;align-items:center;padding:11px 0;border-top:1px solid var(--rule)}
+  .lname{font-family:var(--serif);font-weight:500;font-size:1.02rem;line-height:1.25}
+  .lname small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--sub);margin-top:2px}
+  .lbars{display:grid;gap:5px;padding-right:74px}
+  .lbar{position:relative;height:12px}
+  .lbar i{position:absolute;left:0;top:50%;transform:translateY(-50%);width:var(--w);height:12px;background:var(--crimson)}
+  .lbar.t{height:8px}
+  .lbar.t i{height:6px;background:var(--gold)}
+  .lbar b{position:absolute;left:calc(var(--w) + 8px);top:50%;transform:translateY(-50%);font-family:var(--mono);font-weight:500;font-size:10.5px;color:var(--ink);white-space:nowrap}
+  .ladder-replay{margin-left:auto;font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--crimson);background:none;border:0;border-bottom:1px solid currentColor;padding:0 0 1px;cursor:pointer}
+  .ladder-replay:hover{color:var(--ink)}
+  .lrow{transition:background .15s}
+  .lrow:hover{background:linear-gradient(90deg,transparent,var(--paper-2) 12%,var(--paper-2) 88%,transparent)}
+  .lrow.top .lname{color:var(--crimson)}
+  .plate .stat-row{margin:16px 0 4px}
+  .plate .stat .num{font-size:1.9rem}
+  .plate .stat .lbl{line-height:1.5}
+  .plate-note{font-family:var(--serif);font-style:italic;font-size:.88rem;color:var(--sub);margin:10px 0 4px}
+  @media(max-width:680px){
+    .lrow{grid-template-columns:1fr}
+    .ladder{padding:14px 14px 4px}
+  }
   .tags{display:flex;flex-wrap:wrap;gap:0 14px;margin-top:6px}
   .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--sub)}
   .tag::before{content:"· ";color:var(--gold)}
@@ -606,7 +632,62 @@
     </div>
 
     <div class="plate">
-      <div class="plate-head"><span class="plate-no">Plate III · From the lab notebook</span></div>
+      <div class="plate-head"><span class="plate-no">Plate III · Summer 2026</span></div>
+      <h3>ESCI Semantic Product Search</h3>
+      <p>
+        A product-search system on Amazon&rsquo;s ESCI shopping-queries benchmark, built as a measurement
+        project first. BM25, dense retrieval (bge-small + FAISS), rank fusion and a cross-encoder reranker are each
+        scored on the full 8,956-query test split, so every quality gain is priced in latency. From there:
+        an HNSW index swap, a FastAPI service with memory and load testing, LLM query rewriting (better
+        quality, but not serving-viable as built), and a hard-negative fine-tune of the embedding model that
+        beat the old best pipeline at 2.6&times; the speed.
+      </p>
+      <div class="fig">
+        <div class="ladder" role="img" aria-label="Bar chart of four search systems. nDCG at 10 rises from 0.235 for BM25 to 0.301 for dense, 0.321 for hybrid and 0.365 for hybrid with reranking, while mean latency rises from 27.8 to 42.9, 56.2 and 132.4 milliseconds.">
+          <div class="ladder-key"><span>nDCG@10 (higher is better)</span><span>Mean latency (lower is better)</span><button type="button" class="ladder-replay" aria-label="Replay the chart animation">&#8635; Replay</button></div>
+          <div class="lrow">
+            <div class="lname">BM25<small>full 1.22M catalog</small></div>
+            <div class="lbars">
+              <div class="lbar" style="--w:58.8%"><i></i><b>0.235</b></div>
+              <div class="lbar t" style="--w:19.9%"><i></i><b>27.8 ms</b></div>
+            </div>
+          </div>
+          <div class="lrow">
+            <div class="lname">Dense<small>bge-small · FAISS, 482K corpus</small></div>
+            <div class="lbars">
+              <div class="lbar" style="--w:75.2%"><i></i><b>0.301</b></div>
+              <div class="lbar t" style="--w:30.6%"><i></i><b>42.9 ms</b></div>
+            </div>
+          </div>
+          <div class="lrow">
+            <div class="lname">Hybrid<small>BM25 + dense, rank fusion</small></div>
+            <div class="lbars">
+              <div class="lbar" style="--w:80.2%"><i></i><b>0.321</b></div>
+              <div class="lbar t" style="--w:40.1%"><i></i><b>56.2 ms</b></div>
+            </div>
+          </div>
+          <div class="lrow top">
+            <div class="lname">Hybrid + rerank<small>cross-encoder, top 50</small></div>
+            <div class="lbars">
+              <div class="lbar" style="--w:91.3%"><i></i><b>0.365</b></div>
+              <div class="lbar t" style="--w:94.6%"><i></i><b>132.4 ms</b></div>
+            </div>
+          </div>
+        </div>
+        <div class="fig-cap"><b>Fig. 2.</b> Each layer adds quality and costs latency. Full 8,956-query test split, searching the whole catalog.</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="num" data-count="55" data-prefix="+" data-suffix="%">+55%</div><div class="lbl">nDCG@10, BM25 to hybrid + rerank</div></div>
+        <div class="stat"><div class="num" data-count="41" data-prefix="&minus;" data-suffix="%">&minus;41%</div><div class="lbl">Latency from an HNSW index, for &minus;1.9% MRR</div></div>
+        <div class="stat"><div class="num" data-count="2.6" data-decimals="1" data-suffix="&times;">2.6&times;</div><div class="lbl">Faster than the old best, once fine-tuned (500-query sample)</div></div>
+      </div>
+      <p class="plate-note">Offline evaluation on a public benchmark, never deployed. The write-up says exactly where the numbers stop.</p>
+      <div class="tags"><span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">sentence-transformers</span><span class="tag">FAISS</span><span class="tag">BM25</span><span class="tag">FastAPI</span><span class="tag">information retrieval</span></div>
+      <div class="card-links"><a class="mini-btn" href="https://github.com/AkshatKandwal007/search" target="_blank" rel="noopener">View code ↗</a></div>
+    </div>
+
+    <div class="plate">
+      <div class="plate-head"><span class="plate-no">Plate IV · From the lab notebook</span></div>
       <h3>AI Music Genre Classifier</h3>
       <p>
         A 4-layer CNN (~150K parameters) that classifies Rock, Classical, and Jazz from mel-spectrograms:
@@ -621,11 +702,11 @@
             </svg>
           <img src="assets/img/genre-classifier-loss.webp" alt="Training loss decreasing smoothly over 50 epochs, and test accuracy over the same run" width="1783" height="582" loading="lazy">
           </div>
-          <div class="fig-cap"><b>Fig. 2.</b> Training loss &amp; test accuracy, 50 epochs.</div>
+          <div class="fig-cap"><b>Fig. 3.</b> Training loss &amp; test accuracy, 50 epochs.</div>
         </div>
         <div class="fig">
           <img src="assets/img/genre-classifier-spectrograms.webp" alt="Mel-spectrograms of the three genre classes: Rock, Classical, and Jazz" width="1772" height="432" loading="lazy">
-          <div class="fig-cap"><b>Fig. 3.</b> What the model actually "sees".</div>
+          <div class="fig-cap"><b>Fig. 4.</b> What the model actually "sees".</div>
         </div>
       </div>
       <div class="dash">
@@ -641,7 +722,7 @@
     </div>
 
     <div class="plate">
-      <div class="plate-head"><span class="plate-no">Plate IV</span></div>
+      <div class="plate-head"><span class="plate-no">Plate V</span></div>
       <h3>Traffic Optimization + Object Segmentation</h3>
       <p>
         Watershed segmentation counting 200+ objects per image at 95%+ accuracy, plus a smart traffic-light
@@ -655,7 +736,7 @@
     </div>
 
     <div class="plate">
-      <div class="plate-head"><span class="plate-no">Plate V · The daily grind</span></div>
+      <div class="plate-head"><span class="plate-no">Plate VI · The daily grind</span></div>
       <h3>DSA Solutions in C</h3>
       <p>
         Pattern-first LeetCode in C (arrays &amp; hashing, sliding window, linked lists) with notes on the
@@ -666,7 +747,7 @@
     </div>
 
     <div class="plate">
-      <div class="plate-head"><span class="plate-no">Plate VI · Side quest</span></div>
+      <div class="plate-head"><span class="plate-no">Plate VII · Side quest</span></div>
       <h3>Browser Physics Experiments</h3>
       <p>
         A car racing game and a soft-body car deformation demo, built in vanilla JS: canvas rendering,
@@ -969,6 +1050,44 @@
     })(t0);
   }
 
+  /* ---- Plate III: the ladder bars race in, latency chasing quality ---- */
+  (function ladderRace(){
+    const lad = document.querySelector('.ladder');
+    if (!lad) return;
+    const btn = lad.querySelector('.ladder-replay');
+    if (reduced || !window.anime || !('IntersectionObserver' in window)) { if (btn) btn.remove(); return; }
+    const bars = [...lad.querySelectorAll('.lbar')].map(el => {
+      const b = el.querySelector('b'), isT = el.classList.contains('t');
+      return { el, b, isT, w: parseFloat(el.style.getPropertyValue('--w')), val: parseFloat(b.textContent),
+               dec: isT ? 1 : 3, unit: isT ? ' ms' : '' };
+    });
+    const set = (o, p) => {
+      o.el.style.setProperty('--w', (o.w * p).toFixed(2) + '%');
+      o.b.textContent = (o.val * p).toFixed(o.dec) + o.unit;
+    };
+    let runs = [];
+    const play = () => {
+      runs.forEach(r => r.pause());
+      bars.forEach(o => set(o, 0));
+      runs = bars.map((o, i) => {
+        const p = { v: 0 };
+        return anime({
+          targets: p, v: 1,
+          delay: Math.floor(i / 2) * 220 + (o.isT ? 280 : 0),
+          duration: o.isT ? 500 + o.val * 9 : 900,
+          easing: o.isT ? 'easeInOutQuad' : 'easeOutCubic',
+          update: () => set(o, p.v)
+        });
+      });
+    };
+    bars.forEach(o => set(o, 0));
+    const io = new IntersectionObserver(es => {
+      if (es[0].isIntersecting) { io.disconnect(); play(); }
+    }, { threshold: .45 });
+    io.observe(lad);
+    if (btn) btn.addEventListener('click', play);
+  })();
+
   /* ---- count-up stats ---- */
   const nums = document.querySelectorAll('.num[data-count]');
   const numObs = new IntersectionObserver(entries => {
@@ -976,12 +1095,14 @@
       if (!en.isIntersecting) return;
       numObs.unobserve(en.target);
       const target = +en.target.dataset.count, suf = en.target.dataset.suffix || '';
-      if (reduced) { en.target.textContent = target + suf; return; }
+      const pre = en.target.dataset.prefix || '', dec = +(en.target.dataset.decimals || 0);
+      const fmt = v => pre + (dec ? v.toFixed(dec) : Math.round(v)) + suf;
+      if (reduced) { en.target.textContent = fmt(target); return; }
       const t0 = performance.now(), dur = 1000;
       (function step(now){
         const p = Math.min((now - t0)/dur, 1);
         const eased = 1 - Math.pow(1-p, 3);
-        en.target.textContent = Math.round(target*eased) + suf;
+        en.target.textContent = fmt(target*eased);
         if (p < 1) requestAnimationFrame(step);
       })(t0);
     });
